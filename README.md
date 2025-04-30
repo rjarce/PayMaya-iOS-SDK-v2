@@ -1,24 +1,37 @@
-# PayMayaSDK
-The PayMaya iOS SDK is a library that allows you to easily add credit and debit card as payment options to your mobile application.
+# Maya iOS SDK
+
+## Overview
+
+Official iOS SDK by Maya Philippines for [online payment solutions](https://developers.maya.ph/docs/online-payments).
+For assistance, please check our [developer support page](https://developers.maya.ph/docs/support).
+
+## Supported Use Cases
+
+* [Checkout](https://developers.maya.ph/docs/maya-checkout)
+* [Maya Vault](https://developers.maya.ph/docs/maya-vault)
+  * Capturing tokenized card information via a customizable credit card form
+* [Pay with Maya](https://developers.maya.ph/docs/pay-with-maya)
+  * One-time payment
+  * Create a link to a Maya Wallet
 
 ## Compatibility
 iOS 12.0 or later
 
 ## Integration
 
-##### via CocoaPods
+#### via CocoaPods
 If you use [CocoaPods](http://cocoapods.org/), then add these lines to your podfile:
 ```
 pod 'PayMayaSDK'
 ```
 
-##### via Swift Package Manager
+#### via Swift Package Manager
 ```
 .package(url: "https://github.com/PayMaya/PayMaya-iOS-SDK-v2.git")
 ```
 
 ## Initialization
-Initialize the SDK by specifying intended environment either sandbox or production, an optional level of console logging (off by default) and your API key for a specific payment method you want to use (it can be more than one). We recommend you to do this in your app delegate's didFinishLaunchingWithOptions: method
+Initialize the SDK by specifying intended environment either sandbox or production, an optional level of console logging (off by default) and your API key for a specific payment method you want to use (it can be more than one). We recommend you to do this in your app delegate's `didFinishLaunchingWithOptions:` method
 ```swift
 import PayMayaSDK
 
@@ -33,7 +46,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 ```
 
 ## Using Checkout
-1. Create a CheckoutInfo object with total amount, items, redirection urls, an optional buyer information and optional request reference number (by default it will be auto-generated).
+1. Create a `CheckoutInfo` object with total amount, items, redirection urls, an optional buyer information and optional request reference number (by default it will be auto-generated).
 ```swift
 let itemsToBuy = [
     CheckoutItem(name: "Shoes",
@@ -52,7 +65,7 @@ let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success",
                               
 let checkoutInfo = CheckoutInfo(totalAmount: totalAmount, items: itemsToBuy, redirectUrl: redirectUrl, requestReferenceNumber: "1551191039")
 ```
-2. Call PayMayaSDK.presentCheckout method passing the controller on which the checkout process will present itself and the CheckoutInfo object with the transaction details.
+2. Call `PayMayaSDK.presentCheckout` method passing the controller on which the checkout process will present itself and the `CheckoutInfo` object with the transaction details.
 **NOTE: The callback will be called first when id is created and second time once the process is finished, error occured or the user dismisses the controller.**
 ```swift
 import PayMayaSDK
@@ -109,9 +122,9 @@ func getStatus() {
     }
 }
 ```
-## Using Pay with PayMaya
+## Using Pay with Maya
 ### Single Payment
-1. Create a SinglePaymentInfo object with total amount, redirection urls and an optional request reference number (by default it will be auto-generated).
+1. Create a `SinglePaymentInfo` object with total amount, redirection urls and an optional request reference number (by default it will be auto-generated).
 ```swift
 let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success",
                               failure: "https://www.merchantsite.com/failure",
@@ -121,7 +134,7 @@ let totalAmount = SinglePaymentTotalAmount(currency: "PHP", value: 199)
 
 let singlePaymentInfo = SinglePaymentInfo(totalAmount: totalAmount, redirectUrl: redirectUrl, requestReferenceNumber: "6319921")
 ```
-2. Call PayMayaSDK.presentSinglePayment method passing the controller on which the payment process will present itself and the SinglePaymentInfo object with the transaction details.
+2. Call `PayMayaSDK.presentSinglePayment` method passing the controller on which the payment process will present itself and the `SinglePaymentInfo` object with the transaction details.
 **NOTE: The callback will be called first when id is created and second time once the process is finished, error occured or the user dismisses the controller.**
 ```swift
 import PayMayaSDK
@@ -179,7 +192,7 @@ func getStatus() {
 }
 ```
 ### Creating a Wallet Link
-1. Create a WalletLinkInfo object with redirection urls and an optional request reference number (by default it will be auto-generated).
+1. Create a `WalletLinkInfo`object with redirection urls and an optional request reference number (by default it will be auto-generated).
 ```swift
 let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success",
                               failure: "https://www.merchantsite.com/failure",
@@ -187,7 +200,7 @@ let redirectUrl = RedirectURL(success: "https://www.merchantsite.com/success",
                               
 let walletLinkInfo = WalletLinkInfo(redirectUrl: redirectUrl, requestReferenceNumber: "123456")
 ```
-2. Call PayMayaSDK.presentCreateWalletLink method passing the controller on which the wallet link creation process will present itself and the WalletLinkInfo object.
+2. Call `PayMayaSDK.presentCreateWalletLink` method passing the controller on which the wallet link creation process will present itself and the WalletLinkInfo object.
 **NOTE: The callback will be called first when id is created and second time once the process is finished, error occured or the user dismisses the controller.**
 ```swift
 import PayMayaSDK
@@ -226,8 +239,8 @@ class SomeViewController: UIViewController {
 ...
 }
 ```
-## Using Payment Vault
-Payment Vault provides merchants the ability to store their customer's card details and charge for payments on-demand
+## Using Maya Vault
+Maya Vault provides merchants the ability to store their customer's card details and charge for payments on-demand.
 
 ### Create Payment Token
 Call PayMayaSDK.presentCardPayment method passing the controller on which the card payment process will present itself.
